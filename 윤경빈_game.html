@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자야구</title>
+</head>
+<style>
+    #game h2{
+        font-size: 700;
+        font-size: 24px;
+        color: #111;
+    }
+    #game p{
+        font-size: 18px;
+        color: #111;
+    }
+</style>
+
+<body>
+    <div id="game">
+        <h2>숫자야구게임(네 자리)</h2>
+        <p>결과:&nbsp;<code></code></p>
+    </div>
+    <div>
+        <p>시도 횟수:<code></code></p>
+    </div>
+    <button id="baseballBtn">숫자 부르기</button>
+
+
+
+
+<script>
+
+    const result = document.querySelector('#game p code');
+    
+    let userNum = [],
+        comNum = [];
+
+    for (i=0; i<=3; i++) {
+        let randomNum = Math.floor(Math.random()*9+1);
+        if (comNum.indexOf(randomNum) === -1) {
+            comNum.push(randomNum)
+        }else{
+            i--
+        }
+    }
+    
+    const comNumTotal = comNum.join('/');
+    console.log("정답: " + comNumTotal);
+    
+    const gameStart = function(){
+        userNum = prompt("숫자를 입력하세요");
+        console.log('제출 숫자: ' + userNum);
+
+        let strikeNum = 0,
+            ballNum = 0;
+
+        for(let i=0; i<=3; i++){
+            if(userNum[i] == comNum[i]){
+                strikeNum++;
+            }else{
+                if(comNum.includes(Number(userNum[i]))){
+                    ballNum++;
+                }
+            }
+        }
+
+        if(strikeNum==4){
+            result.innerHTML=`${strikeNum} Strike 정답입니다!`;
+        }else if((strikeNum==0)&&(ballNum==0)){
+            result.innerHTML='OUT 입니다.'
+        }else{
+            result.innerHTML =`${strikeNum} Strike ${ballNum} Ball 입니다.`; 
+        }
+        
+
+
+        /*
+        if(userNum[0]==comNum[0] && userNum[1]==comNum[1] && userNum[2]==comNum[2]){
+            result.innerText = '3 Strike 정답입니다!';
+        }else if((userNum[0]==comNum[0] && userNum[1]==comNum[1]) || (userNum[0]==comNum[0] && userNum[2]==comNum[2]) || (userNum[1]==comNum[1] && userNum[2]==comNum[2])){
+            result.innerText = '2 Strike';
+        }else if((userNum[0]==comNum[0] || userNum[1]==comNum[1] || userNum[2]==comNum[2])
+                && ((comNumTotal.includes(userNum[0])===true && comNumTotal.includes(userNum[1])===true && comNumTotal.includes(userNum[2])===true))){
+            result.innerText = '1 Strike 2 Ball';
+        }else if((userNum[0]==comNum[0] || userNum[1]==comNum[1] || userNum[2]==comNum[2])
+                && ((comNumTotal.includes(userNum[0])===true && comNumTotal.includes(userNum[1])===true) 
+                || (comNumTotal.includes(userNum[0])===true && comNumTotal.includes(userNum[2])===true)
+                || (comNumTotal.includes(userNum[1])===true && comNumTotal.includes(userNum[2])===true))){
+            result.innerText = '1 Strike 1 Ball';
+        }else if(userNum[0]==comNum[0] || userNum[1]==comNum[1] || userNum[2]==comNum[2]){
+            result.innerText = '1 Strike';
+        }else if(comNumTotal.includes(userNum[0])===true || comNumTotal.includes(userNum[1])===true || comNumTotal.includes(userNum[2])===true){
+            result.innerText = '3 Ball';
+        }else if(comNumTotal.includes(userNum[0])===true || comNumTotal.includes(userNum[1])===true){
+            result.innerText = '2 Ball';
+        }else if(comNumTotal.includes(userNum[0])===true){
+            result.innerText = '1 Ball';
+        }else{
+            result.innerText = 'Out 입니다!';
+        }
+        */
+
+    }
+
+    baseballBtn.onclick = gameStart;
+
+
+</script>
+
+
+    
+</body>
+</html>

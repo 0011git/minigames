@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미니게임</title>
+</head>
+<body>
+    <h2>기억력 테스트 : 순서 맞추기</h2>
+        <div class="start">
+            <button>게임 시작</button>
+        </div>
+        <div class="board">
+            <p>0</p>
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <p>6</p>
+            <p>7</p>
+            <p>8</p>
+            <p>9</p>
+        </div>
+
+    <div class="submit">
+        <input type="text" name="number" id="submitted" onchange="receive()"/>
+        <button>제출</button>
+    </div>
+    <div class="result">
+        <p>제출: </p>
+        <p>정답: </p>
+        <p>점수: </p>
+        <strong></strong>
+    </div>
+
+    <style>
+        .board{
+            p{    
+                display: inline;
+                margin: 0;
+                font-size: 56px;
+                font-weight: 700;
+                &.blink{
+                    color: red;
+                }
+            }
+        }
+    </style>
+    <script>
+        const gameStart = document.querySelector('.start button');
+        const number = document.querySelectorAll('.board p');
+        const submit = document.querySelector('.submit button');
+        const result = document.querySelectorAll('.result p');
+        const notice = document.querySelector('.result strong');
+
+        let start = 1000;   //시작 초
+        let light = 150;     //깜빡이 유지시간
+        let answer = new Array();  //정답 기록용 배열 생성
+        let score = 0;  //점수
+        
+
+        //1. 랜덤 숫자 선택 함수
+        let random = () => {
+            let ansLength = Math.ceil(Math.random()*number.length);    //answer 배열 길이 랜덤 선택
+            for(let i=0; i<ansLength;i++){
+                let ranNumIdx = Math.floor(Math.random()*number.length); //number에서 랜덤 인덱스 선택
+                answer.push(ranNumIdx); //랜덤 인덱스를 answer배열에 기록
+            }
+            
+        }
+        
+        //2. 깜빡이 함수
+        //number의 인덱스와 answer배열요소(=랜덤인덱스)에 같은 값이 있는지 비교
+        let blink = (start, light) => {
+            for(let i=0;i<number.length;i++){
+                for(let j=0;j<answer.length;j++){
+                    if(answer[j] == i){
+                        // console.log(`${i} 있`);
+                        //깜빡이기 클래스 추가-삭제
+                        setTimeout(function(){
+                            number[i].classList.add('blink');
+                        }, start*(j+1));
+                        setTimeout(function(){
+                            number[i].classList.remove('blink');
+                        }, ((start*(j+1))+light));
+                    }
+                }  
+            }
+        }
+
+        //3. input값 받아오는 함수    
+        let inputValue = document.querySelector('#submitted').value;
+        
+        let receive = function(){
+            inputValue = document.querySelector('#submitted').value;
+            // console.log(inputValue);
+            // console.log(answer.join(""));
+        }
+
+        //4. 정답 체크하는 함수
+        let check = () => {
+            if(answer.join("") == inputValue){
+                notice.innerText = `정답입니다!`;
+                score++;
+            }else{
+                notice.innerText = `오답입니다. 다시 시도해 보세요.`;
+            }
+        }
+        
+        //5. 출력 함수
+        let print = () => {
+            result[0].innerText = `제출: ${inputValue}`;
+            result[1].innerText = `정답: ${answer.join("")}`;
+            result[2].innerText = `점수: ${score}`;
+        }
+
+        //0. 리셋함수
+        let reset = function(){
+            submitted.value = '';
+            answer = [];
+            result[0].innerText = `제출: `;
+            result[1].innerText = `정답: `;
+            notice.innerText = ``;
+        }
+
+
+        gameStart.onclick = () => {
+            reset();
+            random();
+            blink(start, light);
+        }
+        submit.onclick = () => {
+            receive();
+            check();
+            print();
+
+        }
+        
+    </script>
+    
+</body>
+</html>

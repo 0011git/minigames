@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또게임 - 이한주</title>
+</head>
+<body>
+     <!-- 9: 내가 만드는 게임 -->
+     <style>
+        #lotto {
+            p {
+                display: flex;
+                align-items: center;
+                span {
+                    width: 40px;
+                    height: 40px;
+                    display: block;
+                    border-radius: 50%;
+                    text-align: center;
+                    line-height: 40px;
+                    &:first-of-type {
+                        margin-left: 20px;
+                    }
+                    &:last-of-type {
+                        margin-right: 20px;
+                    }
+                    &:not(:first-of-type) {
+                        margin-left: 12px;
+                    }
+                    &.red {
+                        background-color: red;
+                        color: #fff;
+                    }
+                    &.gray {
+                        background-color: gray;
+                        color: #fff;
+                    }
+                    &.green {
+                        background-color: green;
+                        color: #fff;
+                    }
+                    &.blue {
+                        background-color: blue;
+                        color: #fff;
+                    }
+                    &.yellow {
+                        background-color: yellow;
+                    }
+                }
+            }
+        }
+    </style>
+    <div>
+        <hr>
+        <h2>로또 번호 게임</h2>
+        <div id="lotto">
+            <p>
+                이번주 로또 번호는 : 
+                <span class="lotto_num"></span>
+                <span class="lotto_num"></span>
+                <span class="lotto_num"></span>
+                <span class="lotto_num"></span>
+                <span class="lotto_num"></span>
+                <span class="lotto_num"></span>
+                입니다.
+            </p>
+        </div>
+        <button id="lotto_btn">번호 추첨</button>
+        <hr>
+    </div>
+    <script>
+        let lotto = () => {
+            let lottoArr = [];
+            let lottoNum = '';
+            let lottoSpan = document.querySelectorAll(".lotto_num")
+            let getLottoNum = () => {
+                while(lottoArr.length < 6){
+                    let lottoNum = Math.floor(Math.random() * 45 + 1).toString().padStart("2", 0);
+                    console.log("생성된 숫자:", lottoNum);
+                    // 생성된 랜덤 숫자가 이미 lottoArr에 있으면, push하지 않음.
+                    if(lottoArr.includes(lottoNum)){
+                        console.log(` ㄴ !!${lottoNum}은 중복입니다.`);
+                    } else {
+                        console.log(` ㄴ ${lottoNum}를 추가합니다.`);
+                        lottoArr.push(lottoNum)
+                    }
+                }
+                writeLottoNum();
+            }
+            let writeLottoNum = () => {
+                lottoArr.sort((a, b)=>{ // 오름차순 하고싶으면 b,a 
+                    if(a > b) return 1; // 앞으로 가라
+                    if(a < b) return -1; // 뒤로 가라
+                    return 0; // 제자리
+                });
+                lottoSpan.forEach((v,i)=>{
+                    lottoSpan[i].innerText = lottoArr[i];
+                    // 색상 초기화
+                    lottoSpan[i].classList.remove("yellow", "blue", "red", "gray", "green")
+                    if(lottoSpan[i].innerText < 10) {
+                        // 1~9는 yellow
+                        lottoSpan[i].classList.add("yellow")
+                    } else if (lottoSpan[i].innerText < 20) {
+                        // 10~19는 blue
+                        lottoSpan[i].classList.add("blue")
+                    } else if (lottoSpan[i].innerText < 30) {
+                        // 20~29는 red
+                        lottoSpan[i].classList.add("red")
+                    } else if (lottoSpan[i].innerText < 40) {
+                        // 30~39는 gray
+                        lottoSpan[i].classList.add("gray")
+                    } else if (lottoSpan[i].innerText <= 45) {
+                        // 40~45는 green
+                        lottoSpan[i].classList.add("green")
+                    }
+                })
+            }
+            getLottoNum()
+            lotto_btn.onclick = () => { lotto() };
+        }
+
+        lotto()
+    </script>
+</body>
+</html>

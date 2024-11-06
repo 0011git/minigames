@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <건물 부수기>
+    1. 키보드를 치는 만큼 와다다다다하고 대미지를 줌.
+    2. 다음 클리어 까지 (한 10스테이지?까지 있고)
+    넘어가면 끝~
+    3. 제한 시간 존재함. (45초)
+
+
+    //onclick대신에 아래
+    <keypress></keypress> -->
+
+    구성을 해보자 우선 필요한 사항들 1. 키보드 세팅 2. 키보드 점수 : 1타에 1점씩
+    2. 점수 제한 : 100점 제한 3. 게임 시작 버튼 4. 시간 제한 : 45초
+
+    <div class="main">
+      <h2>제한 시간 내에 타자를 이용해서 스테이지를 클리어 해보세요!</h2>
+      <h2>현재 HP:</h2>
+      <p id="game_over"></p>
+      <div class="game">
+        <button>게임 시작!</button>
+      </div>
+    </div>
+
+    <script>
+      let key_score = 0;
+      // 키 점수
+      let hp = 100;
+      // 제한 시간 내에 쳐야하는 타자 수
+      let time = 0;
+      // 위는 제한 시간
+
+      window.onkeypress = function () {
+        key_score++;
+
+        if (key_score >= 100) {
+          game_over.innerHTML = "clear";
+        }
+        console.log(key_score);
+      };
+
+      let time_attack2 = function time_attack() {
+        time++;
+        if (time >= 45) {
+          game_over.innerHTML = "time over";
+          clearInterval(time_attack2);
+        }
+      };
+      setInterval(time_attack2, 1000);
+
+      // 일단 1초마다 카운트하게 해서 ?
+      // 45초가 도달하면 게임 오버를 하게 해야하는데..?
+
+      //         function test() {
+      //   console.log("Hello!");
+      // }
+      // setInterval(test, 3000);
+      //   let inter=  setInterval(function(){
+      //     console.log('++n')
+      //     if (hp < 100)  clearInterval(inter)
+      //     // 클리어 인터벌 > 초기화 기능, (cpu 과부화 방지를 위해서)
+      //     // n값이 10이 되면 초기화 됨
+      //   },100);
+    </script>
+  </body>
+</html>

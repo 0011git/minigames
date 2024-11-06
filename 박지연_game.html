@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동물 맞추기 게임</title>
+</head>
+<body>
+    <article class="animal_game">
+        <h2>동물 맞추기 게임</h2>
+        <p>제시어에 맞는 동물을 클릭하시오</p>
+        <input type="text" id="ran_box"><button id="btn_game">게임 시작</button>
+        <div class="figure_wrap">
+        <img src="./img/panda1.jpg" alt="판다이미지" data-name="판다">
+        <img src="./img/otter.jpg" alt="수달이미지" data-name="수달">
+        <img src="./img/elephant.jpg" alt="코끼리이미지" data-name="코끼리">
+        <img src="./img/sloth.jpg" alt="나무늘보이미지" data-name="나무늘보">
+        <img src="./img/lesser panda.jpg" alt="레서판다이미지" data-name="레서판다">
+        <img src="./img/monkey.jpg" alt="원숭이이미지" data-name="원숭이">
+        </div>   
+    </article>
+    <style>
+    .figure_wrap{
+    margin: 20px 0 50px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    }
+    .figure_wrap > img{
+        height: 300px;
+        width: 300px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px dashed black;
+        
+    }
+    .animal_game > input{
+        height: 30px;
+        margin: 0;
+        padding: 0;
+    }
+    .animal_game > button{
+        height: 34px;
+        margin-left: 5px;
+        border-radius: 2px;
+        vertical-align: middle;
+        background-color: black;
+        color: white;
+        border: none;
+    }
+    </style>
+    
+    <script>
+    const figureImg = document.querySelectorAll('.figure_wrap img');
+    
+    let letters=['판다', '원숭이', '코끼리', '레서판다', '나무늘보', '수달'];
+    
+    btn_game.onclick = function(){
+        let num = Math.floor(Math.random()*letters.length);
+        ran_box.value = letters[num] //input 박스에 밸류 값을 랜덤으로 찍어줘라
+        // console.log(ran_box.value);
+    
+        //제시어가 중복되지 않게 나오려면?
+        // letters.splice(num, 1);
+        
+        //판다와 판다 카드의 data-sum이 맞으면 정답
+      figureImg.forEach((img)=>{
+      img.onclick = function(){
+        // console.log(figureImg[2])
+        
+        let result = this.dataset.name;
+        console.log(result)
+        // com_result.innerText =result;
+    
+        if(result === letters[num]) alert('정답입니다.')
+        else alert('정답이 아닙니다. 다시 선택해보세요.');
+    }
+    });
+    }
+    
+    </script>
+</body>
+</html>

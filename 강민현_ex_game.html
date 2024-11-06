@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <article>
+        <div class="exGame">
+            <p>같은 문양은? <code>[@]</code></p>
+            <p class="exGame_result"></p>
+        </div>
+        <div class="exAns">
+            <button>[@]</button>
+            <button>[%]</button>
+            <button>[&]</button>
+            <button>[!]</button>
+        </div>
+    </article>
+
+    <script>
+
+        const Ans = document.querySelector('.exAns'),
+            Q = document.querySelector('.exGame code'),
+            btn = document.querySelectorAll('.exAns button'),
+            res = document.querySelector('.exGame .exGame_result');
+        let A ;
+        let Play = ()=>{
+            let icon = ['@', '#', '$', '&']
+
+
+
+            let comNum1 = Math.floor(Math.random() * 4);
+            // icon[comNum]
+
+        // console.log(  icon.includes('@') )
+
+            A = icon[comNum1];
+
+            const numSet = new Set([]);
+            
+
+            for(i=0; i<100; i++){
+                let uNum = Math.floor(Math.random() * 4);
+                if(numSet.length != 4){
+                    numSet.add(uNum);
+                    console.log(numSet.length);
+                }else{
+                    break;
+                }
+            }
+
+            
+            
+            Q.innerText = `[${A}]`;
+            let numSet2 = [...numSet];
+
+            let btnFun = btn.forEach((v,i)=>{
+                    
+                    if(comNum1 === i){
+                        v.innerText = `${icon[comNum1]}`;
+                    }else{
+                        v.innerText = `${icon[numSet2[i]]}`;
+                    }
+            });
+        }
+
+
+        let resPlay = function(){
+            if(A == this.innerText){
+                res.innerText = "성공";
+            }
+            else{
+                res.innerText = "실패";
+            }
+        }
+
+
+        Play();
+        btn[0].onclick = resPlay;
+        btn[1].onclick = resPlay;
+        btn[2].onclick = resPlay;
+        btn[3].onclick = resPlay;
+
+
+
+        
+    </script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+</head>
+<body>
+   <article>
+      <h2>랜덤뽑기</h2>
+      <ul class="namelist">
+         <li>호랑이</li>
+         <li>너구리</li>
+         <li>개미</li>
+         <li>고라니</li>
+         <li>비둘기</li>
+         <li>도롱뇽</li>
+         <li>해파리</li>
+      </ul>
+      <div class="curtain"></div>
+      <div>
+         <button id="start">뽑기</button>
+         <button id="replay">다시하기</button>
+      </div>
+   </article>
+
+   <style>
+      article{
+         width: 1200px;
+         height: 700px;
+         margin: 0 auto;
+         text-align: center;
+         overflow: hidden;
+         position: relative;
+      }
+      ul{
+         display: flex;
+         list-style: none;
+         justify-content: center;
+         gap: 10px;
+         padding: 0;
+         height: 400px;
+         align-items: center;
+         /* position: relative; */
+      }
+      li {
+         width: 80px;
+         height: 160px;
+         background-color: aquamarine;
+         text-align: center;
+         padding-top: 15px;
+      }
+      .curtain{
+         width: 800px;
+         height: 350px;
+         background-color: rgb(153, 0, 0);
+         z-index: 2;
+         position: absolute;
+         top: 13%;
+         left: 1200px;
+         transition: 1s;
+      }
+   </style>
+
+   <script>
+      const nl = document.querySelectorAll('.namelist li');
+      
+      let nli = ['호랑이','너구리','개미','고라니','비둘기','도롱뇽','해파리'];
+      let ran = Math.floor(Math.random() * 7);
+      let cur = document.querySelector('.curtain');
+      let num = 1;
+      
+      start.onclick = function(){
+         setTimeout(() => {
+            cur.style = `transform: translateX(${num * -125}%)`;
+            setTimeout(() => {
+               cur.style = `transform: translateX(${num * 100}%)`;
+            }, 2000)
+         },0 )
+         
+         setTimeout(() => {
+            nl[ran].style.backgroundColor ='#E49BFF';
+            nl[ran].style.height ='220px';
+      }, 1700)
+         
+         setTimeout(() => {
+            alert(`축하합니다! 당신은 ${nli[ran]}입니다!`)
+         }, 3000);
+      }
+      
+      replay.onclick = function(){
+         nl[ran].style.backgroundColor ='aquamarine';
+         nl[ran].style.height ='160px';
+         ran = Math.floor(Math.random() * 7);
+      };
+
+   </script>
+</body>
+</html>
